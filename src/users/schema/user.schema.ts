@@ -1,4 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import mongoose from 'mongoose';
+import { Job } from 'src/job/schema/job.schema';
 
 @Schema({ timestamps: true })
 export class User {
@@ -15,6 +17,13 @@ export class User {
     select: false,
   })
   password: string;
+
+  @Prop({
+    type: [mongoose.Types.ObjectId],
+    ref: Job.name,
+    default: [],
+  })
+  jobs: mongoose.Types.ObjectId[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
